@@ -58,6 +58,7 @@ convertFraudColumn = function(fraud){
   }
 }
 
+
 # Returns date one year prior
 oneYearBack = function(date){
   d = as.POSIXlt(date)
@@ -65,17 +66,20 @@ oneYearBack = function(date){
   return(as.Date(d))
 }
 
+
 # Calculate feature: Number of fraud cases in the past year
 fraudCountPastYear = function(col_name, group, lookup_table, datetime){
   group = toString(group)
   return(sum(lookup_table[[col_name]][[group]][DateTime >= oneYearBack(datetime) & DateTime <= datetime]$FraudFound))
 }
 
+
 # Calculate feature: Number of legitimate cases in the past year
 legitimateCountPastYear = function(col_name, group, lookup_table, datetime){
   group = toString(group)
   return(sum(!lookup_table[[col_name]][[group]][DateTime >= oneYearBack(datetime) & DateTime <= datetime]$FraudFound))
 }
+
 
 # Calculate feature: Number of months that have a fraud case in the past year
 fraudMonthsPastYear = function(col_name, group, lookup_table, datetime){
@@ -89,6 +93,7 @@ fraudMonthsPastYear = function(col_name, group, lookup_table, datetime){
   }
 }
 
+
 # Calculate feature: Number of legitimate months in the past year
 legitimateMonthsPastYear = function(col_name, group, lookup_table, datetime){
   group = toString(group)
@@ -100,6 +105,7 @@ legitimateMonthsPastYear = function(col_name, group, lookup_table, datetime){
     return(as.vector(c(0), mode = "integer"))
   }
 }
+
 
 # Compute features
 calculateFeature = function(feature_df, subset_df, col_name, lookup_table, features){
